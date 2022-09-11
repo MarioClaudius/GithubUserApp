@@ -1,5 +1,6 @@
 package android.example.com.githubuserapp
 
+import android.content.Intent
 import android.example.com.githubuserapp.adapter.ListUserAdapter
 import android.example.com.githubuserapp.data.User
 import android.example.com.githubuserapp.databinding.ActivityMainBinding
@@ -52,9 +53,11 @@ class MainActivity : AppCompatActivity() {
 
         listUserAdapter.setOnItemClickCallback(object: ListUserAdapter.onItemClickCallback {
             override fun onItemClicked(data: User) {
-                selectedUser(data)
+                //selectedUser(data)
+                val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
+                intentToDetail.putExtra("DATA", data)
+                startActivity(intentToDetail)
             }
-
         })
     }
 

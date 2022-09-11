@@ -13,7 +13,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:src="@drawable/success_logo_no_bg"/>
+        app:layout_constraintBottom_toTopOf="@id/tv_detail_name"
+        tools:src="@drawable/success_logo_no_bg"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
         android:id="@+id/tv_detail_name"
@@ -22,10 +24,12 @@
         app:layout_constraintTop_toBottomOf="@+id/detail_photo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_detail_username"
         tools:text="Mario Claudius"
         android:fontFamily="@font/nexa_bold"
         android:textColor="@color/black"
-        android:textSize="35sp"/>
+        android:textSize="35sp"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
         android:id="@+id/tv_detail_username"
@@ -34,10 +38,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_detail_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_detail_location"
         tools:text="MarioClaudius"
         android:textColor="@color/black"
         android:fontFamily="@font/nexa_light"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
         android:id="@+id/tv_detail_location"
@@ -46,10 +52,12 @@
         app:layout_constraintTop_toBottomOf="@id/tv_detail_username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_detail_company"
         tools:text="Jakarta, Indonesia"
         android:textColor="@color/black"
         android:fontFamily="@font/nexa_light"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
         android:id="@+id/tv_detail_company"
@@ -58,10 +66,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_detail_location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Currently working at Tokopedia"
+        app:layout_constraintBottom_toTopOf="@id/tv_detail_repository"
+        tools:text="Tokopedia"
         android:textColor="@color/black"
         android:fontFamily="@font/nexa_light"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
         android:id="@+id/tv_detail_repository"
@@ -70,9 +80,37 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_detail_company"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_detail_follow_icon"
         tools:text="20 Repository"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:fontFamily="@font/nexa_bold"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <ImageView
+        android:id="@+id/iv_detail_follow_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_baseline_people_24"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_repository"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_detail_follow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/tv_detail_follow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        tools:text="100 follower - 200 following"
+        app:layout_constraintTop_toTopOf="@+id/iv_detail_follow_icon"
+        app:layout_constraintBottom_toBottomOf="@id/iv_detail_follow_icon"
+        app:layout_constraintStart_toEndOf="@id/iv_detail_follow_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/nexa_bold"
+        android:textColor="@color/black"
+        android:textSize="20sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

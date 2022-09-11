@@ -41,7 +41,7 @@
         <item>Jakarta Indonesia</item>
     </string-array>
 
-    <string-array name="repository">
+    <integer-array name="repository">
         <item>102</item>
         <item>37</item>
         <item>9</item>
@@ -52,7 +52,7 @@
         <item>110</item>
         <item>1064</item>
         <item>65</item>
-    </string-array>
+    </integer-array>
 
     <string-array name="company">
         <item>Google, Inc.</item>

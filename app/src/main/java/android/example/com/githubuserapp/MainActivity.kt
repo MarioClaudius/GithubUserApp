@@ -6,7 +6,6 @@ import android.example.com.githubuserapp.data.User
 import android.example.com.githubuserapp.databinding.ActivityMainBinding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -57,15 +56,10 @@ class MainActivity : AppCompatActivity() {
 
         listUserAdapter.setOnItemClickCallback(object: ListUserAdapter.onItemClickCallback {
             override fun onItemClicked(data: User) {
-                //selectedUser(data)
                 val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
                 intentToDetail.putExtra(EXTRA_DATA, data)
                 startActivity(intentToDetail)
             }
         })
-    }
-
-    private fun selectedUser(user: User) {
-        Toast.makeText(this, "${user.name}", Toast.LENGTH_SHORT).show()
     }
 }

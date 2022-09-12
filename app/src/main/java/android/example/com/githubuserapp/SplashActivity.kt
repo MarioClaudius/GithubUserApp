@@ -5,8 +5,8 @@ import android.example.com.githubuserapp.databinding.ActivitySplashBinding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 
-@Suppress("DEPRECATION")
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Handler().postDelayed({
+        Handler(Looper.myLooper()!!).postDelayed({
             val intent= Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
             finish()

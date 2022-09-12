@@ -11,10 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        const val EXTRA_DATA = "extra_data"
-    }
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var rvUser: RecyclerView
     private val list = ArrayList<User>()
@@ -54,12 +50,16 @@ class MainActivity : AppCompatActivity() {
         val listUserAdapter = ListUserAdapter(list)
         rvUser.adapter = listUserAdapter
 
-        listUserAdapter.setOnItemClickCallback(object: ListUserAdapter.onItemClickCallback {
+        listUserAdapter.setOnItemClickCallback(object: ListUserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
                 val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
                 intentToDetail.putExtra(EXTRA_DATA, data)
                 startActivity(intentToDetail)
             }
         })
+    }
+
+    companion object {
+        const val EXTRA_DATA = "extra_data"
     }
 }

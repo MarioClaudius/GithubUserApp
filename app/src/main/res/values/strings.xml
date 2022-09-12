@@ -1,6 +1,8 @@
 <resources>
     <!-- Other string resources-->
     <string name="app_name">GithubUserApp</string>
+    <string name="repository">%d Repository</string>
+    <string name="detail_follow">%d follower - %d following</string>
 
     <string-array name="username">
         <item>JakeWharton</item>

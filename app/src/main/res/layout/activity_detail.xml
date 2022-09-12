@@ -40,9 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_detail_location"
         tools:text="MarioClaudius"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nexa_light"
-        android:textSize="20sp"
+        style="@style/NormalTextDetail"
         app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
@@ -54,9 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_detail_company"
         tools:text="Jakarta, Indonesia"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nexa_light"
-        android:textSize="20sp"
+        style="@style/NormalTextDetail"
         app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
@@ -68,9 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_detail_repository"
         tools:text="Tokopedia"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nexa_light"
-        android:textSize="20sp"
+        style="@style/NormalTextDetail"
         app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView

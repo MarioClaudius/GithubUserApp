@@ -2,8 +2,9 @@ package android.example.com.githubuserapp
 
 import android.example.com.githubuserapp.data.User
 import android.example.com.githubuserapp.databinding.ActivityDetailBinding
-import androidx.appcompat.app.AppCompatActivity
+import android.example.com.githubuserapp.main.MainActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
 class DetailActivity : AppCompatActivity() {
 

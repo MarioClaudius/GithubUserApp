@@ -1,11 +1,18 @@
-package android.example.com.githubuserapp
+package android.example.com.githubuserapp.main
 
+import android.app.SearchManager
 import android.content.Intent
+import android.example.com.githubuserapp.DetailActivity
+import android.example.com.githubuserapp.R
 import android.example.com.githubuserapp.adapter.ListUserAdapter
+import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.data.User
 import android.example.com.githubuserapp.databinding.ActivityMainBinding
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -20,10 +27,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
+        viewModel.userList.observe(this, { githubUserList ->
+
+        })
+
         rvUser = binding.rvGithubUser
         rvUser.setHasFixedSize(true)
 
         list.addAll(listUsers)
+
         showRecyclerList()
     }
 
@@ -39,13 +52,22 @@ class MainActivity : AppCompatActivity() {
             val dataFollowing = resources.getIntArray(R.array.following)
             val listUser = ArrayList<User>()
             for (i in dataUsername.indices) {
-                val user = User(dataUsername[i], dataName[i], dataAvatar.getResourceId(i, -1), dataCompany[i], dataLocation[i], dataRepository[i], dataFollower[i], dataFollowing[i])
+                val user = User(
+                    dataUsername[i],
+                    dataName[i],
+                    dataAvatar.getResourceId(i, -1),
+                    dataCompany[i],
+                    dataLocation[i],
+                    dataRepository[i],
+                    dataFollower[i],
+                    dataFollowing[i]
+                )
                 listUser.add(user)
             }
             return listUser
         }
 
-    private fun showRecyclerList() {
+    private fun showRecyclerList(githubUserList : List<GithubUser>) {
         rvUser.layoutManager = LinearLayoutManager(this)
         val listUserAdapter = ListUserAdapter(list)
         rvUser.adapter = listUserAdapter
@@ -57,6 +79,28 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intentToDetail)
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.option_menu, menu)
+
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        val searchView = menu!!.findItem(R.id.search).actionView as SearchView
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.queryHint = resources.getString(R.string.search_hint)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 
     companion object {

@@ -34,14 +34,6 @@ class ListUserAdapter(private val listUser: ArrayList<User>) :
                 }
             }
         }
-//        holder.binding.avatarPhoto.setImageResource(avatar)
-//        holder.binding.tvUsername.text = username
-//        holder.binding.tvName.text = name
-//        holder.binding.tvLocation.text = location
-//        holder.binding.tvFollow.text = "$follower follower - $following following"
-//        holder.itemView.setOnClickListener {
-//            onItemClickCallBack.onItemClicked(listUser[holder.adapterPosition])
-//        }
     }
 
     override fun getItemCount(): Int = listUser.size

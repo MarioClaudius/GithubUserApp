@@ -3,6 +3,7 @@ package android.example.com.githubuserapp.main
 import android.example.com.githubuserapp.api.ApiConfig
 import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.data.GithubUserListResponse
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,18 +25,17 @@ class MainViewModel : ViewModel() {
 
     private fun displayUserList() {
         val client = ApiConfig.getApiService().getGithubUserList()
-        client.enqueue(object : Callback<GithubUserListResponse> {
-            override fun onResponse(call: Call<GithubUserListResponse>, response: Response<GithubUserListResponse>) {
+        client.enqueue(object : Callback<List<GithubUser>> {
+            override fun onResponse(call: Call<List<GithubUser>>, response: Response<List<GithubUser>>) {
                 if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    _userList.value = responseBody?.githubUserListResponse
+                    _userList.value = response.body()
                 }
             }
 
-            override fun onFailure(call: Call<GithubUserListResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+            override fun onFailure(call: Call<List<GithubUser>>, t: Throwable) {
+                _isLoading.value = false
+                Log.e("TEST", "onFailure: ${t.message.toString()}")
             }
-
         })
     }
 

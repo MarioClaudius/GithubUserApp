@@ -2,6 +2,7 @@ package android.example.com.githubuserapp
 
 import android.content.Intent
 import android.example.com.githubuserapp.databinding.ActivitySplashBinding
+import android.example.com.githubuserapp.main.MainActivity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler

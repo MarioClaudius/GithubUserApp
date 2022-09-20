@@ -28,16 +28,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
-        viewModel.userList.observe(this, { githubUserList ->
-
-        })
+        viewModel.userList.observe(this) { githubUserList ->
+            showRecyclerList(githubUserList)
+        }
 
         rvUser = binding.rvGithubUser
         rvUser.setHasFixedSize(true)
 
         list.addAll(listUsers)
-
-        showRecyclerList()
     }
 
     private val listUsers: ArrayList<User>
@@ -69,11 +67,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun showRecyclerList(githubUserList : List<GithubUser>) {
         rvUser.layoutManager = LinearLayoutManager(this)
-        val listUserAdapter = ListUserAdapter(list)
+        val listUserAdapter = ListUserAdapter(githubUserList)
         rvUser.adapter = listUserAdapter
 
         listUserAdapter.setOnItemClickCallback(object: ListUserAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: User) {
+            override fun onItemClicked(data: GithubUser) {
                 val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
                 intentToDetail.putExtra(EXTRA_DATA, data)
                 startActivity(intentToDetail)

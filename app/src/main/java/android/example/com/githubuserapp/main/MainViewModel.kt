@@ -2,7 +2,7 @@ package android.example.com.githubuserapp.main
 
 import android.example.com.githubuserapp.api.ApiConfig
 import android.example.com.githubuserapp.data.GithubUser
-import android.example.com.githubuserapp.data.GithubUserListResponse
+import android.example.com.githubuserapp.data.SearchUserResponse
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,14 +20,16 @@ class MainViewModel : ViewModel() {
     val userList : LiveData<List<GithubUser>> = _userList
 
     init {
-        displayUserList()
+        displayGithubUserList()
     }
 
-    private fun displayUserList() {
+    fun displayGithubUserList() {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().getGithubUserList()
         client.enqueue(object : Callback<List<GithubUser>> {
             override fun onResponse(call: Call<List<GithubUser>>, response: Response<List<GithubUser>>) {
                 if (response.isSuccessful) {
+                    _isLoading.value = false
                     _userList.value = response.body()
                 }
             }
@@ -36,6 +38,25 @@ class MainViewModel : ViewModel() {
                 _isLoading.value = false
                 Log.e("TEST", "onFailure: ${t.message.toString()}")
             }
+        })
+    }
+
+    fun searchGithubUserList(username : String) {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().searchGithubUserList(username)
+        client.enqueue(object : Callback<SearchUserResponse> {
+            override fun onResponse(call: Call<SearchUserResponse>, response: Response<SearchUserResponse>) {
+                if (response.isSuccessful) {
+                    _isLoading.value = false
+                    _userList.value = response.body()?.items
+                }
+            }
+
+            override fun onFailure(call: Call<SearchUserResponse>, t: Throwable) {
+                _isLoading.value = false
+                Log.e("TEST", "onFailure: ${t.message.toString()}")
+            }
+
         })
     }
 

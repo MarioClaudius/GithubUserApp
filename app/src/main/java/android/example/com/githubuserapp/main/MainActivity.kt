@@ -9,9 +9,13 @@ import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.data.User
 import android.example.com.githubuserapp.databinding.ActivityMainBinding
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var rvUser: RecyclerView
+    private lateinit var viewModel: MainViewModel
     private val list = ArrayList<User>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,9 +32,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
         viewModel.userList.observe(this) { githubUserList ->
             showRecyclerList(githubUserList)
+        }
+
+        viewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
         rvUser = binding.rvGithubUser
@@ -84,21 +93,45 @@ class MainActivity : AppCompatActivity() {
         inflater.inflate(R.menu.option_menu, menu)
 
         val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
-        val searchView = menu!!.findItem(R.id.search).actionView as SearchView
+        val searchItem : MenuItem = menu!!.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.search_hint)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
+
+        searchItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                return true
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("Not yet implemented")
+            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+                viewModel.displayGithubUserList()
+                return true
             }
 
         })
-        return super.onCreateOptionsMenu(menu)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.searchGithubUserList(query.toString())
+                searchView.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+        return true
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 
     companion object {

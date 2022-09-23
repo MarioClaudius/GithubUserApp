@@ -2,7 +2,7 @@ package android.example.com.githubuserapp.main
 
 import android.app.SearchManager
 import android.content.Intent
-import android.example.com.githubuserapp.DetailActivity
+import android.example.com.githubuserapp.detail.DetailActivity
 import android.example.com.githubuserapp.R
 import android.example.com.githubuserapp.adapter.ListUserAdapter
 import android.example.com.githubuserapp.data.GithubUser
@@ -15,7 +15,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

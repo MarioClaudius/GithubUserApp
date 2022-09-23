@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailActivity">
+    tools:context=".detail.DetailActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/detail_photo"
@@ -15,8 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_detail_name"
         android:layout_marginTop="20dp"
-        tools:src="@drawable/success_logo_no_bg"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        tools:src="@drawable/success_logo_no_bg" />
 
     <TextView
         android:id="@+id/tv_detail_name"
@@ -29,8 +28,7 @@
         tools:text="Mario Claudius"
         android:fontFamily="@font/nexa_bold"
         android:textColor="@color/black"
-        android:textSize="35sp"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        android:textSize="35sp" />
 
     <TextView
         android:id="@+id/tv_detail_username"
@@ -41,8 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_detail_location"
         tools:text="MarioClaudius"
-        style="@style/NormalTextDetail"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        style="@style/NormalTextDetail" />
 
     <TextView
         android:id="@+id/tv_detail_location"
@@ -53,8 +50,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_detail_company"
         tools:text="Jakarta, Indonesia"
-        style="@style/NormalTextDetail"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        style="@style/NormalTextDetail" />
 
     <TextView
         android:id="@+id/tv_detail_company"
@@ -65,8 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_detail_repository"
         tools:text="Tokopedia"
-        style="@style/NormalTextDetail"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        style="@style/NormalTextDetail" />
 
     <TextView
         android:id="@+id/tv_detail_repository"
@@ -78,8 +73,7 @@
         tools:text="20 Repository"
         android:textSize="20sp"
         android:fontFamily="@font/nexa_bold"
-        android:textColor="@color/black"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        android:textColor="@color/black" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/follower_tabs"
@@ -88,12 +82,25 @@
         android:background="?attr/colorPrimary"
         app:layout_constraintTop_toBottomOf="@id/tv_detail_repository"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
         app:tabTextColor="@android:color/white"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/follower_tabs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"/>
 
 <!--    <ImageView-->
 <!--        android:id="@+id/iv_detail_follow_icon"-->

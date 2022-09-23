@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 class ListUserAdapter(private val githubUserList: List<GithubUser>) :
     RecyclerView.Adapter<ListUserAdapter.ListViewHolder>() {
 
-    private lateinit var onItemClickCallBack: OnItemClickCallback
+    private var onItemClickCallBack: OnItemClickCallback? = null
 
     class ListViewHolder(var binding: ItemGithubUserBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -28,6 +28,14 @@ class ListUserAdapter(private val githubUserList: List<GithubUser>) :
         Glide.with(holder.itemView.context)
             .load(githubUser.avatarUrl)
             .into(holder.binding.avatarPhoto)
+        holder.apply {
+            binding.apply {
+                tvName.text = githubUser.login
+                itemView.setOnClickListener {
+                    onItemClickCallBack?.onItemClicked(githubUserList[holder.adapterPosition])
+                }
+            }
+        }
         holder.binding.tvName.text = githubUser.login
 //        holder.apply {
 //            binding.apply {

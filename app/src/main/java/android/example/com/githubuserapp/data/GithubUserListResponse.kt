@@ -17,7 +17,7 @@ data class GithubUser(
 	val id: Int,
 
 	@field:SerializedName("created_at")
-	val createdAt: String,
+	val createdAt: String?,
 
 	@field:SerializedName("login")
 	val login: String,
@@ -26,34 +26,34 @@ data class GithubUser(
 	val type: String,
 
 	@field:SerializedName("updated_at")
-	val updatedAt: String,
+	val updatedAt: String?,
 
 	@field:SerializedName("company")
-	val company: String,
+	val company: String?,
 
 	@field:SerializedName("public_repos")
-	val publicRepos: Int,
+	val publicRepos: Int?,
 
 	@field:SerializedName("organizations_url")
-	val organizationsUrl: String,
+	val organizationsUrl: String?,
 
 	@field:SerializedName("followers_url")
-	val followersUrl: String,
+	val followersUrl: String?,
 
 	@field:SerializedName("followers")
-	val followers: Int,
+	val followers: Int?,
 
 	@field:SerializedName("avatar_url")
-	val avatarUrl: String,
+	val avatarUrl: String?,
 
 	@field:SerializedName("following")
-	val following: Int,
+	val following: Int?,
 
 	@field:SerializedName("name")
-	val name: String,
+	val name: String?,
 
 	@field:SerializedName("location")
-	val location: String,
+	val location: String?,
 ): Parcelable
 
 data class SearchUserResponse(

@@ -26,6 +26,7 @@ class FollowFragment : Fragment() {
 
         val githubUser : GithubUser = requireActivity().intent.getParcelableExtra(MainActivity.EXTRA_DATA)!!
         val tabTitle = arguments?.getString(TAB_TITLE)
+        binding.rvFollower.layoutManager = LinearLayoutManager(activity)
 
         if (tabTitle == FOLLOWER) {
             viewModel.displayFollowerList(githubUser.login)
@@ -40,37 +41,11 @@ class FollowFragment : Fragment() {
         viewModel.followList.observe(viewLifecycleOwner) {
             val adapter = ListUserAdapter(it)
             binding.apply {
-                rvFollower.layoutManager = LinearLayoutManager(activity)
                 rvFollower.adapter = adapter
             }
         }
         return binding.root
     }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-////        val githubUser : GithubUser = requireActivity().intent.getParcelableExtra(MainActivity.EXTRA_DATA)!!
-////        val tabTitle = arguments?.getString(TAB_TITLE)
-////
-////        if (tabTitle == FOLLOWER) {
-////            viewModel.displayFollowerList(githubUser.login)
-////        } else if (tabTitle == FOLLOWING) {
-////            viewModel.displayFollowingList(githubUser.login)
-////        }
-////
-////        viewModel.isLoading.observe(viewLifecycleOwner) {
-////            showLoading(it)
-////        }
-////
-////        viewModel.followList.observe(viewLifecycleOwner) {
-////            val adapter = ListUserAdapter(it)
-////            binding.apply {
-////                rvFollower.layoutManager = LinearLayoutManager(activity)
-////                rvFollower.adapter = adapter
-////            }
-////        }
-//    }
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {

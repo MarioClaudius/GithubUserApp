@@ -6,89 +6,175 @@
     android:layout_height="match_parent"
     tools:context=".detail.DetailActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/detail_photo"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:background="@color/dark_gray"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_detail_name"
-        android:layout_marginTop="20dp"
-        tools:src="@drawable/success_logo_no_bg" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/tv_detail_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/detail_photo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_detail_username"
-        tools:text="Mario Claudius"
-        android:fontFamily="@font/nexa_bold"
-        android:textColor="@color/black"
-        android:textSize="35sp" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/detail_photo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:layout_constraintTop_toTopOf="@id/detail_layout"
+            app:layout_constraintStart_toStartOf="@id/detail_layout"
+            app:layout_constraintEnd_toEndOf="@id/detail_layout"
+            app:layout_constraintBottom_toTopOf="@id/tv_detail_name"
+            tools:src="@drawable/success_logo_no_bg" />
 
-    <TextView
-        android:id="@+id/tv_detail_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_detail_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_detail_location"
-        tools:text="MarioClaudius"
-        style="@style/NormalTextDetail" />
+        <TextView
+            android:id="@+id/tv_detail_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/detail_photo"
+            app:layout_constraintStart_toStartOf="@id/detail_layout"
+            app:layout_constraintEnd_toEndOf="@id/detail_layout"
+            app:layout_constraintBottom_toTopOf="@id/tv_detail_name"
+            tools:text="MarioClaudius"
+            android:fontFamily="@font/nexa_bold"
+            android:textColor="@color/white"
+            android:textSize="35sp" />
 
-    <TextView
-        android:id="@+id/tv_detail_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_detail_username"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_detail_company"
-        tools:text="Jakarta, Indonesia"
-        style="@style/NormalTextDetail" />
+        <TextView
+            android:id="@+id/tv_detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_detail_location"
+            tools:text="Mario Claudius"
+            style="@style/NormalTextDetail" />
 
-    <TextView
-        android:id="@+id/tv_detail_company"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_detail_location"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_detail_repository"
-        tools:text="Tokopedia"
-        style="@style/NormalTextDetail" />
+        <TextView
+            android:id="@+id/tv_detail_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_detail_company"
+            tools:text="Jakarta, Indonesia"
+            style="@style/NormalTextDetail" />
 
-    <TextView
-        android:id="@+id/tv_detail_repository"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_detail_company"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="20 Repository"
-        android:textSize="20sp"
-        android:fontFamily="@font/nexa_bold"
-        android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/tv_detail_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_detail_repository"
+            android:layout_marginHorizontal="40dp"
+            android:textAlignment="center"
+            tools:text="Tokopedia"
+            style="@style/NormalTextDetail" />
+
+        <TextView
+            android:id="@+id/tv_detail_repository"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_company"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="20dp"
+            tools:text="20 Repository"
+            android:textSize="20sp"
+            android:fontFamily="@font/nexa_bold"
+            android:textColor="@color/white" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--        android:id="@+id/detail_photo"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="120dp"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/tv_detail_name"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        tools:src="@drawable/success_logo_no_bg" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_detail_username"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/detail_photo"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/tv_detail_name"-->
+<!--        tools:text="MarioClaudius"-->
+<!--        android:fontFamily="@font/nexa_bold"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="35sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_detail_name"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tv_detail_username"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/tv_detail_location"-->
+<!--        tools:text="Mario Claudius"-->
+<!--        style="@style/NormalTextDetail" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_detail_location"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_detail_username"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/tv_detail_company"-->
+<!--        tools:text="Jakarta, Indonesia"-->
+<!--        style="@style/NormalTextDetail" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_detail_company"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tv_detail_location"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/tv_detail_repository"-->
+<!--        android:layout_marginHorizontal="40dp"-->
+<!--        android:textAlignment="center"-->
+<!--        tools:text="Tokopedia"-->
+<!--        style="@style/NormalTextDetail" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_detail_repository"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tv_detail_company"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        tools:text="20 Repository"-->
+<!--        android:textSize="20sp"-->
+<!--        android:fontFamily="@font/nexa_bold"-->
+<!--        android:textColor="@color/black" />-->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/follower_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@id/tv_detail_repository"
+        app:layout_constraintTop_toBottomOf="@id/detail_layout"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
-        app:tabTextColor="@android:color/white"/>
+        app:tabBackground="@drawable/tabs_selector"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/dark_gray"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/follower_tabs"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

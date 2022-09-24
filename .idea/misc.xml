@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/GithubUserApp/app/src/main/res/drawable/round_tab.xml" value="0.228" />
+        <entry key="..\:/AndroidStudioProjects/GithubUserApp/app/src/main/res/drawable/tabs_selector.xml" value="0.228" />
         <entry key="..\:/AndroidStudioProjects/GithubUserApp/app/src/main/res/layout/activity_detail.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/GithubUserApp/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/GithubUserApp/app/src/main/res/layout/activity_splash.xml" value="0.264" />

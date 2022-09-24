@@ -23,6 +23,6 @@ interface ApiService {
     fun getFollowingList(@Path("username") username: String) : Call<List<GithubUser>>
 
     @GET("users/{username}")
-    @Headers("Authorization: token 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")
+//    @Headers("Authorization: token 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")
     fun getGithubUserDetail(@Path("username") username: String) : Call<GithubUser>
 }

@@ -6,6 +6,7 @@ import android.example.com.githubuserapp.data.User
 import android.example.com.githubuserapp.databinding.ActivityDetailBinding
 import android.example.com.githubuserapp.main.MainActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -38,38 +39,39 @@ class DetailActivity : AppCompatActivity() {
                 tvDetailCompany.text = detailGithubUser.company
                 tvDetailRepository.text = resources.getString(R.string.repository, detailGithubUser.publicRepos)
             }
+            if (detailGithubUser.name == null) {
+                binding.tvDetailName.visibility = View.GONE
+            }
+            if(detailGithubUser.location == null) {
+                binding.tvDetailLocation.visibility = View.GONE
+            }
+            if (detailGithubUser.company == null) {
+                binding.tvDetailCompany.visibility = View.GONE
+            }
+            val sectionsPagerAdapter = SectionsPagerAdapter(this)
+            binding.viewPager.adapter = sectionsPagerAdapter
+            TabLayoutMediator(binding.followerTabs, binding.viewPager) { tab, position ->
+                tab.text = if (position == 0) {
+                    "${detailGithubUser.followers} follower"
+                } else {
+                    "${detailGithubUser.following} following"
+                }
+            }.attach()
         }
 
         viewModel.isLoading.observe(this) {
             showLoading(it)
         }
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this)
-        binding.viewPager.adapter = sectionsPagerAdapter
-        TabLayoutMediator(binding.followerTabs, binding.viewPager) { tab, position ->
-            tab.text = if (position == 0) {
-                " follower"
-            } else {
-                " following"
-            }
-        }.attach()
-
-//        binding.apply {
-//            detailPhoto.setImageResource(user.avatar)
-//            tvDetailName.text = user.name
-//            tvDetailUsername.text = user.username
-//            tvDetailLocation.text = user.location
-//            tvDetailCompany.text = user.company
-//            tvDetailRepository.text = resources.getString(R.string.repository, user.repository)
-//            tvDetailFollow.text = resources.getString(R.string.detail_follow, user.follower, user.following)
-//        }
-//        binding.detailPhoto.setImageResource(user.avatar)
-//        binding.tvDetailName.text = user.name
-//        binding.tvDetailUsername.text = user.username
-//        binding.tvDetailLocation.text = user.location
-//        binding.tvDetailCompany.text = user.company
-//        binding.tvDetailRepository.text = resources.getString(R.string.repository, user.repository)
-//        binding.tvDetailFollow.text = resources.getString(R.string.detail_follow, user.follower, user.following)
+//        val sectionsPagerAdapter = SectionsPagerAdapter(this)
+//        binding.viewPager.adapter = sectionsPagerAdapter
+//        TabLayoutMediator(binding.followerTabs, binding.viewPager) { tab, position ->
+//            tab.text = if (position == 0) {
+//                " follower"
+//            } else {
+//                " following"
+//            }
+//        }.attach()
     }
 
     private fun showLoading(isLoading: Boolean) {

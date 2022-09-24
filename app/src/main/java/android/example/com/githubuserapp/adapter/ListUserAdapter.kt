@@ -30,13 +30,13 @@ class ListUserAdapter(private val githubUserList: List<GithubUser>) :
             .into(holder.binding.avatarPhoto)
         holder.apply {
             binding.apply {
-                tvName.text = githubUser.login
+                tvUsername.text = githubUser.login
+                tvType.text = githubUser.type
                 itemView.setOnClickListener {
                     onItemClickCallBack?.onItemClicked(githubUserList[holder.adapterPosition])
                 }
             }
         }
-        holder.binding.tvName.text = githubUser.login
 //        holder.apply {
 //            binding.apply {
 ////                avatarPhoto.setImageResource(avatar)

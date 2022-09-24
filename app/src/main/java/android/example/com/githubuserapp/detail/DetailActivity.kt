@@ -8,6 +8,7 @@ import android.example.com.githubuserapp.main.MainActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -63,15 +64,10 @@ class DetailActivity : AppCompatActivity() {
             showLoading(it)
         }
 
-//        val sectionsPagerAdapter = SectionsPagerAdapter(this)
-//        binding.viewPager.adapter = sectionsPagerAdapter
-//        TabLayoutMediator(binding.followerTabs, binding.viewPager) { tab, position ->
-//            tab.text = if (position == 0) {
-//                " follower"
-//            } else {
-//                " following"
-//            }
-//        }.attach()
+        viewModel.isError.observe(this) {
+            Toast.makeText(this, "Data not found!", Toast.LENGTH_SHORT).show()
+            viewModel.doneToastErrorInput()
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

@@ -15,6 +15,9 @@ class DetailViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isError = MutableLiveData<Boolean>()
+    val isError : LiveData<Boolean> = _isError
+
     private val _githubUserDetail = MutableLiveData<GithubUser>()
     val githubUserDetail : LiveData<GithubUser> = _githubUserDetail
 
@@ -34,7 +37,7 @@ class DetailViewModel : ViewModel() {
 
             override fun onFailure(call: Call<GithubUser>, t: Throwable) {
                 _isLoading.value = false
-                Log.e("DetailFailure", "onFailure: ${t.message.toString()}")
+                _isError.value = true
             }
         })
     }
@@ -52,7 +55,7 @@ class DetailViewModel : ViewModel() {
 
             override fun onFailure(call: Call<List<GithubUser>>, t: Throwable) {
                 _isLoading.value = false
-                Log.e("FollowerFailure", "onFailure: ${t.message.toString()}")
+                _isError.value = true
             }
         })
     }
@@ -70,8 +73,12 @@ class DetailViewModel : ViewModel() {
 
             override fun onFailure(call: Call<List<GithubUser>>, t: Throwable) {
                 _isLoading.value = false
-                Log.e("FollowingFailure", "onFailure: ${t.message.toString()}")
+                _isError.value = true
             }
         })
+    }
+
+    fun doneToastErrorInput() {
+        _isError.value = false
     }
 }

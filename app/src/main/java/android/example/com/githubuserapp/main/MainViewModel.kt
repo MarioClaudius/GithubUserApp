@@ -4,6 +4,7 @@ import android.example.com.githubuserapp.api.ApiConfig
 import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.data.SearchUserResponse
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,9 @@ class MainViewModel : ViewModel() {
 
     private val _userList = MutableLiveData<List<GithubUser>>()
     val userList : LiveData<List<GithubUser>> = _userList
+
+    private val _isError = MutableLiveData<Boolean>()
+    val isError : LiveData<Boolean> = _isError
 
     init {
         displayGithubUserList()
@@ -36,7 +40,7 @@ class MainViewModel : ViewModel() {
 
             override fun onFailure(call: Call<List<GithubUser>>, t: Throwable) {
                 _isLoading.value = false
-                Log.e("TEST", "onFailure: ${t.message.toString()}")
+                _isError.value = true
             }
         })
     }
@@ -60,4 +64,7 @@ class MainViewModel : ViewModel() {
         })
     }
 
+    fun doneToastErrorInput() {
+        _isError.value = false
+    }
 }

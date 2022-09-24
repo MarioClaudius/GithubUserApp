@@ -9,6 +9,7 @@ import android.example.com.githubuserapp.adapter.ListUserAdapter
 import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.databinding.FragmentFollowBinding
 import android.example.com.githubuserapp.main.MainActivity
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -44,6 +45,12 @@ class FollowFragment : Fragment() {
                 rvFollower.adapter = adapter
             }
         }
+
+        viewModel.isError.observe(viewLifecycleOwner) {
+            Toast.makeText(context, "Data not found!", Toast.LENGTH_SHORT).show()
+            viewModel.doneToastErrorInput()
+        }
+
         return binding.root
     }
 

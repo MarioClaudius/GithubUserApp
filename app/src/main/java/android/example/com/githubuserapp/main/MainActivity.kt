@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
@@ -40,38 +41,14 @@ class MainActivity : AppCompatActivity() {
             showLoading(it)
         }
 
+        viewModel.isError.observe(this) {
+            Toast.makeText(this, "Data not found!", Toast.LENGTH_SHORT).show()
+            viewModel.doneToastErrorInput()
+        }
+
         rvUser = binding.rvGithubUser
         rvUser.setHasFixedSize(true)
-
-        list.addAll(listUsers)
     }
-
-    private val listUsers: ArrayList<User>
-        get() {
-            val dataUsername = resources.getStringArray(R.array.username)
-            val dataName = resources.getStringArray(R.array.name)
-            val dataAvatar = resources.obtainTypedArray(R.array.avatar)
-            val dataCompany = resources.getStringArray(R.array.company)
-            val dataLocation = resources.getStringArray(R.array.location)
-            val dataRepository = resources.getIntArray(R.array.repository)
-            val dataFollower = resources.getIntArray(R.array.followers)
-            val dataFollowing = resources.getIntArray(R.array.following)
-            val listUser = ArrayList<User>()
-            for (i in dataUsername.indices) {
-                val user = User(
-                    dataUsername[i],
-                    dataName[i],
-                    dataAvatar.getResourceId(i, -1),
-                    dataCompany[i],
-                    dataLocation[i],
-                    dataRepository[i],
-                    dataFollower[i],
-                    dataFollowing[i]
-                )
-                listUser.add(user)
-            }
-            return listUser
-        }
 
     private fun showRecyclerList(githubUserList : List<GithubUser>) {
         rvUser.layoutManager = LinearLayoutManager(this)

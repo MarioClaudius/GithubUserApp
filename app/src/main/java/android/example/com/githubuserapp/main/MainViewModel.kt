@@ -4,7 +4,6 @@ import android.example.com.githubuserapp.api.ApiConfig
 import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.data.SearchUserResponse
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -60,7 +59,6 @@ class MainViewModel : ViewModel() {
                 _isLoading.value = false
                 Log.e("TEST", "onFailure: ${t.message.toString()}")
             }
-
         })
     }
 

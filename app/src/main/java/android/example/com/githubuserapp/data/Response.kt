@@ -4,12 +4,6 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-data class GithubUserListResponse(
-
-	@field:SerializedName("GithubUserListResponse")
-	val githubUserListResponse: List<GithubUser>
-)
-
 @Parcelize
 data class GithubUser(
 

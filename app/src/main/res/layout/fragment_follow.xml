@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="@+id/follower_layout"
         app:layout_constraintStart_toStartOf="@id/follower_layout"
-        tools:listitem="@layout/item_follow"/>
+        tools:listitem="@layout/item_github_user"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

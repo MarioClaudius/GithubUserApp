@@ -6,10 +6,8 @@ import android.example.com.githubuserapp.detail.DetailActivity
 import android.example.com.githubuserapp.R
 import android.example.com.githubuserapp.adapter.ListUserAdapter
 import android.example.com.githubuserapp.data.GithubUser
-import android.example.com.githubuserapp.data.User
 import android.example.com.githubuserapp.databinding.ActivityMainBinding
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -25,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var rvUser: RecyclerView
     private lateinit var viewModel: MainViewModel
-    private val list = ArrayList<User>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

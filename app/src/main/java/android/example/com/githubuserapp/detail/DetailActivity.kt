@@ -2,11 +2,9 @@ package android.example.com.githubuserapp.detail
 
 import android.example.com.githubuserapp.R
 import android.example.com.githubuserapp.data.GithubUser
-import android.example.com.githubuserapp.data.User
 import android.example.com.githubuserapp.databinding.ActivityDetailBinding
 import android.example.com.githubuserapp.main.MainActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity

@@ -7,7 +7,9 @@ import android.example.com.githubuserapp.R
 import android.example.com.githubuserapp.adapter.ListUserAdapter
 import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.databinding.ActivityMainBinding
+import android.example.com.githubuserapp.favorite.FavoriteActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]      // perlu dibikin ViewModelFactory
         viewModel.userList.observe(this) { githubUserList ->
             showRecyclerList(githubUserList)
         }
@@ -64,39 +66,56 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.option_menu, menu)
-
-        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
-        val searchItem : MenuItem = menu!!.findItem(R.id.search)
-        val searchView = searchItem.actionView as SearchView
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView.queryHint = resources.getString(R.string.search_hint)
-
-        searchItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
-                return true
-            }
-
-            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
-                viewModel.displayGithubUserList()
-                return true
-            }
-
-        })
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.searchGithubUserList(query.toString())
-                searchView.clearFocus()
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-
-        })
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.search -> {
+                val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+                val searchItem : MenuItem = item
+                val searchView = searchItem.actionView as SearchView
+
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+                searchView.queryHint = resources.getString(R.string.search_hint)
+
+                searchItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener {
+                    override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                        return true
+                    }
+
+                    override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+                        viewModel.displayGithubUserList()
+                        return true
+                    }
+
+                })
+
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        viewModel.searchGithubUserList(query.toString())
+                        searchView.clearFocus()
+                        return true
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        return false
+                    }
+
+                })
+                return true
+            }
+            R.id.favorite -> {
+                val intentToFavorite = Intent(this@MainActivity, FavoriteActivity::class.java)
+                startActivity(intentToFavorite)
+                return true
+            }
+            R.id.setting -> {
+                Log.d("SETTING", "TEST MENU SETTING")
+                return true
+            }
+            else -> return true
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

@@ -8,6 +8,7 @@ import android.example.com.githubuserapp.adapter.ListUserAdapter
 import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.databinding.ActivityMainBinding
 import android.example.com.githubuserapp.favorite.FavoriteActivity
+import android.example.com.githubuserapp.helper.ViewModelFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -31,7 +32,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]      // perlu dibikin ViewModelFactory
+        val viewModelFactory = ViewModelFactory.getInstance(this@MainActivity.application)
+        viewModel = ViewModelProvider(this@MainActivity, viewModelFactory)[MainViewModel::class.java]
+
         viewModel.userList.observe(this) { githubUserList ->
             showRecyclerList(githubUserList)
         }

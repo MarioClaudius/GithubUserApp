@@ -3,7 +3,9 @@ package android.example.com.githubuserapp.detail
 import android.example.com.githubuserapp.R
 import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.databinding.ActivityDetailBinding
+import android.example.com.githubuserapp.helper.ViewModelFactory
 import android.example.com.githubuserapp.main.MainActivity
+import android.example.com.githubuserapp.main.MainViewModel
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -22,10 +24,12 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
+//        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
 
-        val user = intent.getParcelableExtra<GithubUser>(MainActivity.EXTRA_DATA) as GithubUser
-        viewModel.getGithubUserDetail(user.login)
+        val username = intent.getStringExtra(MainActivity.EXTRA_DATA)!!
+        val viewModelFactory = ViewModelFactory.getInstance(this@DetailActivity.application, username)
+        viewModel = ViewModelProvider(this@DetailActivity, viewModelFactory)[DetailViewModel::class.java]
+        viewModel.getGithubUserDetail(username)
 
         viewModel.githubUserDetail.observe(this) { detailGithubUser ->
             Glide.with(this)

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModelFactory = ViewModelFactory.getInstance(this@MainActivity.application)
+        val viewModelFactory = ViewModelFactory.getInstance(this@MainActivity.application, "")
         viewModel = ViewModelProvider(this@MainActivity, viewModelFactory)[MainViewModel::class.java]
 
         viewModel.userList.observe(this) { githubUserList ->
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         listUserAdapter.setOnItemClickCallback(object: ListUserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: GithubUser) {
                 val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
-                intentToDetail.putExtra(EXTRA_DATA, data)
+                intentToDetail.putExtra(EXTRA_DATA, data.login)
                 startActivity(intentToDetail)
             }
         })

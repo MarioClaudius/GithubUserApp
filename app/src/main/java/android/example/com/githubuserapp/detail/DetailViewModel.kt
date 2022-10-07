@@ -1,7 +1,9 @@
 package android.example.com.githubuserapp.detail
 
+import android.app.Application
 import android.example.com.githubuserapp.api.ApiConfig
 import android.example.com.githubuserapp.data.GithubUser
+import android.example.com.githubuserapp.repository.FavoriteUserRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +11,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(application: Application, username: String) : ViewModel() {
+    private val mFavoriteUserRepository : FavoriteUserRepository = FavoriteUserRepository(application)
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -22,6 +25,8 @@ class DetailViewModel : ViewModel() {
 
     private val _followList = MutableLiveData<List<GithubUser>>()
     val followList : LiveData<List<GithubUser>> = _followList
+
+    val favoriteUserIsExist : LiveData<Boolean> = mFavoriteUserRepository.getFavoriteUserByUsername(username)
 
     fun getGithubUserDetail(username: String) {
         _isLoading.value = true

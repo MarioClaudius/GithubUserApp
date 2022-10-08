@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.example.com.githubuserapp.adapter.ListUserAdapter
 import android.example.com.githubuserapp.data.GithubUser
+import android.example.com.githubuserapp.database.FavoriteUser
 import android.example.com.githubuserapp.databinding.FragmentFollowBinding
+import android.example.com.githubuserapp.favorite.FavoriteActivity
+import android.example.com.githubuserapp.helper.ViewModelFactory
 import android.example.com.githubuserapp.main.MainActivity
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -23,16 +26,22 @@ class FollowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFollowBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
+//        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
+        val viewModelFactory = ViewModelFactory.getInstance(this@FollowFragment.requireActivity().application, "")
+        viewModel = ViewModelProvider(this@FollowFragment.requireActivity(), viewModelFactory)[DetailViewModel::class.java]
 
-        val githubUser : GithubUser = requireActivity().intent.getParcelableExtra(MainActivity.EXTRA_DATA)!!
+        val githubUser : GithubUser? = requireActivity().intent.getParcelableExtra(MainActivity.EXTRA_DATA)
+        val favoriteUser : FavoriteUser? = requireActivity().intent.getParcelableExtra(FavoriteActivity.EXTRA_FAVORITE)
+        val username : String = if (githubUser != null) githubUser.login else favoriteUser?.username.toString()
         val tabTitle = arguments?.getString(TAB_TITLE)
         binding.rvFollower.layoutManager = LinearLayoutManager(activity)
 
         if (tabTitle == FOLLOWER) {
-            viewModel.displayFollowerList(githubUser.login)
+//            viewModel.displayFollowerList(githubUser.login)
+            viewModel.displayFollowerList(username)
         } else if (tabTitle == FOLLOWING) {
-            viewModel.displayFollowingList(githubUser.login)
+//            viewModel.displayFollowingList(githubUser.login)
+            viewModel.displayFollowingList(username)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {

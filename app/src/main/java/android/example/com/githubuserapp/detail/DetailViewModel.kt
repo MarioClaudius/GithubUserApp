@@ -3,7 +3,10 @@ package android.example.com.githubuserapp.detail
 import android.app.Application
 import android.example.com.githubuserapp.api.ApiConfig
 import android.example.com.githubuserapp.data.GithubUser
+import android.example.com.githubuserapp.database.FavoriteUser
 import android.example.com.githubuserapp.repository.FavoriteUserRepository
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +14,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel(application: Application, username: String) : ViewModel() {
-    private val mFavoriteUserRepository : FavoriteUserRepository = FavoriteUserRepository(application)
+class DetailViewModel(application: Application, username1: String) : AndroidViewModel(application) {
+    private val mFavoriteUserRepository : FavoriteUserRepository = FavoriteUserRepository(getApplication())
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -26,9 +29,14 @@ class DetailViewModel(application: Application, username: String) : ViewModel() 
     private val _followList = MutableLiveData<List<GithubUser>>()
     val followList : LiveData<List<GithubUser>> = _followList
 
-    val favoriteUserIsExist : LiveData<Boolean> = mFavoriteUserRepository.getFavoriteUserByUsername(username)
+    val favoriteUserIsExist : LiveData<Boolean> = mFavoriteUserRepository.getFavoriteUserByUsername(username1)
+
+    init {
+        Log.d("INIT", username1)
+    }
 
     fun getGithubUserDetail(username: String) {
+//        Log.d("DetailViewModel", username1)
         _isLoading.value = true
         val client = ApiConfig.getApiService().getGithubUserDetail(username)
         client.enqueue(object: Callback<GithubUser> {
@@ -84,5 +92,13 @@ class DetailViewModel(application: Application, username: String) : ViewModel() 
 
     fun doneToastErrorInput() {
         _isError.value = false
+    }
+
+    fun addFavoriteUser(favoriteUser: FavoriteUser) {
+        mFavoriteUserRepository.insert(favoriteUser)
+    }
+
+    fun deleteFavoriteUser(favoriteUser: FavoriteUser) {
+        mFavoriteUserRepository.delete(favoriteUser)
     }
 }

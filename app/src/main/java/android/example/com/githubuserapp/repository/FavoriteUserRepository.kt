@@ -4,6 +4,7 @@ import android.app.Application
 import android.example.com.githubuserapp.database.FavoriteUser
 import android.example.com.githubuserapp.database.FavoriteUserDao
 import android.example.com.githubuserapp.database.FavoriteUserDatabase
+import android.util.Log
 import androidx.lifecycle.LiveData
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -23,7 +24,10 @@ class FavoriteUserRepository(application: Application) {
         executorService.execute { mFavoriteUserDao.insert(favoriteUser) }
     }
 
-    fun getFavoriteUserByUsername(username: String) : LiveData<Boolean> = mFavoriteUserDao.findFavoriteUserByUsername(username)
+    fun getFavoriteUserByUsername(username: String) : LiveData<Boolean> {
+        Log.d("REPO", username)
+        return mFavoriteUserDao.findFavoriteUserByUsername(username)
+    }
 
     fun delete(favoriteUser: FavoriteUser) {
         executorService.execute { mFavoriteUserDao.delete(favoriteUser) }

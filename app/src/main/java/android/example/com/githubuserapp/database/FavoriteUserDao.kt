@@ -17,6 +17,6 @@ interface FavoriteUserDao {
     @Query("SELECT * FROM favoriteuser ORDER BY id ASC")
     fun getAllFavoriteUsers() : LiveData<List<FavoriteUser>>
 
-    @Query("SELECT EXISTS(SELECT * FROM favoriteuser WHERE id = :username)")
+    @Query("SELECT EXISTS(SELECT * FROM favoriteuser WHERE username = :username)")
     fun findFavoriteUserByUsername(username: String) : LiveData<Boolean>
 }

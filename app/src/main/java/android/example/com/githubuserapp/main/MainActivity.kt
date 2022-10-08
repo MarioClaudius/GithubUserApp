@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         listUserAdapter.setOnItemClickCallback(object: ListUserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: GithubUser) {
                 val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
-                intentToDetail.putExtra(EXTRA_DATA, data.login)
+                intentToDetail.putExtra(EXTRA_DATA, data)
                 startActivity(intentToDetail)
             }
         })

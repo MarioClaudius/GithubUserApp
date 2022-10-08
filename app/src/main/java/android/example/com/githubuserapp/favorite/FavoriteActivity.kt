@@ -32,6 +32,9 @@ class FavoriteActivity : AppCompatActivity() {
         viewModel.favoriteUserList.observe(this) { favoriteUserList ->
             showFavoriteUserList(favoriteUserList)
         }
+
+        rvFavoriteUser = binding.rvFavoriteUser
+        rvFavoriteUser.setHasFixedSize(true)
     }
 
     private fun showFavoriteUserList(favoriteUserList: List<FavoriteUser>) {
@@ -42,9 +45,13 @@ class FavoriteActivity : AppCompatActivity() {
         listFavoriteUserAdapter.setOnItemClickCallback(object : ListFavoriteUserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: FavoriteUser) {
                 val intentToDetail = Intent(this@FavoriteActivity, DetailActivity::class.java)
-                intentToDetail.putExtra(MainActivity.EXTRA_DATA, data.username)
+                intentToDetail.putExtra(EXTRA_FAVORITE, data)
                 startActivity(intentToDetail)
             }
         })
+    }
+
+    companion object {
+        const val EXTRA_FAVORITE = "extra-favorite"
     }
 }

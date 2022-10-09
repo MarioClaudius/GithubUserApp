@@ -1,5 +1,6 @@
 package android.example.com.githubuserapp.detail
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,9 +13,15 @@ import android.example.com.githubuserapp.databinding.FragmentFollowBinding
 import android.example.com.githubuserapp.favorite.FavoriteActivity
 import android.example.com.githubuserapp.helper.ViewModelFactory
 import android.example.com.githubuserapp.main.MainActivity
+import android.example.com.githubuserapp.settingpreferences.SettingPreferences
 import android.widget.Toast
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class FollowFragment : Fragment() {
 
@@ -27,7 +34,8 @@ class FollowFragment : Fragment() {
     ): View? {
         binding = FragmentFollowBinding.inflate(inflater, container, false)
 //        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
-        val viewModelFactory = ViewModelFactory(this@FollowFragment.requireActivity().application, "")
+        val pref = SettingPreferences.getInstance(requireContext().dataStore)
+        val viewModelFactory = ViewModelFactory(this@FollowFragment.requireActivity().application, "", pref)
         viewModel = ViewModelProvider(this@FollowFragment.requireActivity(), viewModelFactory)[DetailViewModel::class.java]
 
         val githubUser : GithubUser? = requireActivity().intent.getParcelableExtra(MainActivity.EXTRA_DATA)

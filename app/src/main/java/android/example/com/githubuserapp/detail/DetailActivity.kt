@@ -1,5 +1,6 @@
 package android.example.com.githubuserapp.detail
 
+import android.content.Context
 import android.example.com.githubuserapp.R
 import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.database.FavoriteUser
@@ -7,16 +8,20 @@ import android.example.com.githubuserapp.databinding.ActivityDetailBinding
 import android.example.com.githubuserapp.favorite.FavoriteActivity
 import android.example.com.githubuserapp.helper.ViewModelFactory
 import android.example.com.githubuserapp.main.MainActivity
-import android.example.com.githubuserapp.main.MainViewModel
+import android.example.com.githubuserapp.settingpreferences.SettingPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class DetailActivity : AppCompatActivity() {
 
@@ -28,11 +33,13 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val pref = SettingPreferences.getInstance(dataStore)
+
         val githubUser = intent.getParcelableExtra<GithubUser?>(MainActivity.EXTRA_DATA)
         val favoriteUser = intent.getParcelableExtra<FavoriteUser?>(FavoriteActivity.EXTRA_FAVORITE)
         val username : String = if (githubUser != null) githubUser.login else favoriteUser?.username.toString()
 
-        val viewModelFactory = ViewModelFactory(this@DetailActivity.application, username)
+        val viewModelFactory = ViewModelFactory(this@DetailActivity.application, username, pref)
         viewModel = ViewModelProvider(this@DetailActivity, viewModelFactory)[DetailViewModel::class.java]
         viewModel.getGithubUserDetail(username)
 
@@ -77,8 +84,6 @@ class DetailActivity : AppCompatActivity() {
         }
 
         viewModel.favoriteUserIsExist.observe(this) { favoriteUserIsExist ->
-            if(favoriteUserIsExist == null) {
-            }
             if (favoriteUserIsExist) {
                 binding.fabFavorite.setImageDrawable(ContextCompat.getDrawable(baseContext, R.drawable.ic_baseline_favorite_24))
             } else {

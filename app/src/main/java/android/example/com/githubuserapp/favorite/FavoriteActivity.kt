@@ -1,19 +1,25 @@
 package android.example.com.githubuserapp.favorite
 
+import android.content.Context
 import android.content.Intent
-import android.example.com.githubuserapp.R
 import android.example.com.githubuserapp.adapter.ListFavoriteUserAdapter
 import android.example.com.githubuserapp.database.FavoriteUser
 import android.example.com.githubuserapp.databinding.ActivityFavoriteBinding
 import android.example.com.githubuserapp.detail.DetailActivity
 import android.example.com.githubuserapp.helper.ViewModelFactory
-import android.example.com.githubuserapp.main.MainActivity
 import android.example.com.githubuserapp.repository.FavoriteUserRepository
-import androidx.appcompat.app.AppCompatActivity
+import android.example.com.githubuserapp.settingpreferences.SettingPreferences
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class FavoriteActivity : AppCompatActivity() {
 
@@ -26,11 +32,20 @@ class FavoriteActivity : AppCompatActivity() {
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModelFactory = ViewModelFactory(this@FavoriteActivity.application, "")
+        val pref = SettingPreferences.getInstance(dataStore)
+
+        val viewModelFactory = ViewModelFactory(this@FavoriteActivity.application, "", pref)
         viewModel = ViewModelProvider(this@FavoriteActivity, viewModelFactory)[FavoriteViewModel::class.java]
 
         viewModel.favoriteUserList.observe(this) { favoriteUserList ->
-            showFavoriteUserList(favoriteUserList)
+            if(favoriteUserList.size == 0) {
+                binding.rvFavoriteUser.visibility = View.GONE
+                binding.tvNoFavoriteUser.visibility = View.VISIBLE
+            } else {
+                binding.rvFavoriteUser.visibility = View.VISIBLE
+                binding.tvNoFavoriteUser.visibility = View.GONE
+                showFavoriteUserList(favoriteUserList)
+            }
         }
 
         rvFavoriteUser = binding.rvFavoriteUser

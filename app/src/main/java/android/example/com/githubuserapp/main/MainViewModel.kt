@@ -3,15 +3,15 @@ package android.example.com.githubuserapp.main
 import android.example.com.githubuserapp.api.ApiConfig
 import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.data.SearchUserResponse
+import android.example.com.githubuserapp.settingpreferences.SettingPreferences
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val pref: SettingPreferences) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -20,6 +20,8 @@ class MainViewModel : ViewModel() {
 
     private val _isError = MutableLiveData<Boolean>()
     val isError : LiveData<Boolean> = _isError
+
+    val isDarkMode : LiveData<Boolean> = pref.getThemeSetting().asLiveData()
 
     init {
         displayGithubUserList()
@@ -63,5 +65,20 @@ class MainViewModel : ViewModel() {
 
     fun doneToastErrorInput() {
         _isError.value = false
+    }
+
+//    fun getThemeSettings(): LiveData<Boolean> {
+//        Log.d("VIEWMODEL",  pref.toString())
+//        return pref.getThemeSetting().asLiveData()
+//    }
+
+    fun saveThemeSetting(isDarkModeActive: Boolean) {
+        viewModelScope.launch {
+            pref.saveThemeSetting(isDarkModeActive)
+        }
+    }
+
+    fun checkIsDarkModeSetting() : Boolean? {
+        return isDarkMode.value
     }
 }

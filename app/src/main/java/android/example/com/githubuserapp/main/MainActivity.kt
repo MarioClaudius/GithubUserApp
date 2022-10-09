@@ -1,6 +1,7 @@
 package android.example.com.githubuserapp.main
 
 import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.example.com.githubuserapp.detail.DetailActivity
 import android.example.com.githubuserapp.R
@@ -9,17 +10,23 @@ import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.databinding.ActivityMainBinding
 import android.example.com.githubuserapp.favorite.FavoriteActivity
 import android.example.com.githubuserapp.helper.ViewModelFactory
+import android.example.com.githubuserapp.settingpreferences.SettingPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +39,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModelFactory = ViewModelFactory(this@MainActivity.application, "")
+        val pref = SettingPreferences.getInstance(dataStore)
+
+        val viewModelFactory = ViewModelFactory(this@MainActivity.application, "", pref)
         viewModel = ViewModelProvider(this@MainActivity, viewModelFactory)[MainViewModel::class.java]
 
         viewModel.userList.observe(this) { githubUserList ->
@@ -46,6 +55,14 @@ class MainActivity : AppCompatActivity() {
         viewModel.isError.observe(this) {
             Toast.makeText(this, "Data not found!", Toast.LENGTH_SHORT).show()
             viewModel.doneToastErrorInput()
+        }
+
+        viewModel.isDarkMode.observe(this) { isDarkModeActive ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
         }
 
         rvUser = binding.rvGithubUser
@@ -68,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.option_menu, menu)
+        inflater.inflate(R.menu.option_menu, menu)!!
         return true
     }
 
@@ -114,11 +131,34 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.setting -> {
-                Log.d("SETTING", "TEST MENU SETTING")
+                val isDarkMode = viewModel.checkIsDarkModeSetting()!!
+                viewModel.saveThemeSetting(!isDarkMode)
+                invalidateOptionsMenu()
                 return true
             }
             else -> return true
         }
+    }
+
+//    fun changeMenuIcon(menuItem: MenuItem, isDarkModeActive: Boolean) {
+//        if (isDarkModeActive) {
+//            menuItem.setIcon(R.drawable.ic_light_mode)
+//        } else {
+//            menuItem.setIcon(R.drawable.ic_dark_mode)
+//        }
+//        invalidateOptionsMenu()
+//    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val isDarkMode: Boolean? = viewModel.checkIsDarkModeSetting()
+        if (isDarkMode == null) return true
+        val modeMenu = menu?.findItem(R.id.setting)
+        if (isDarkMode) {
+            modeMenu?.setIcon(R.drawable.ic_light_mode)
+        } else {
+            modeMenu?.setIcon(R.drawable.ic_dark_mode)
+        }
+        return super.onPrepareOptionsMenu(menu)
     }
 
     private fun showLoading(isLoading: Boolean) {

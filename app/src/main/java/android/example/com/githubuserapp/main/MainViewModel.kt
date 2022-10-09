@@ -1,11 +1,8 @@
 package android.example.com.githubuserapp.main
 
-import android.app.Application
 import android.example.com.githubuserapp.api.ApiConfig
 import android.example.com.githubuserapp.data.GithubUser
 import android.example.com.githubuserapp.data.SearchUserResponse
-import android.example.com.githubuserapp.database.FavoriteUser
-import android.example.com.githubuserapp.repository.FavoriteUserRepository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,9 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel(application: Application) : ViewModel() {
-    private val mFavoriteUserRepository : FavoriteUserRepository = FavoriteUserRepository(application)
-
+class MainViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -28,14 +23,6 @@ class MainViewModel(application: Application) : ViewModel() {
 
     init {
         displayGithubUserList()
-    }
-
-    fun insert(favoriteUser: FavoriteUser) {
-        mFavoriteUserRepository.insert(favoriteUser)
-    }
-
-    fun delete(favoriteUser: FavoriteUser) {
-        mFavoriteUserRepository.delete(favoriteUser)
     }
 
     fun displayGithubUserList() {

@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel(application: Application, username1: String) : AndroidViewModel(application) {
+class DetailViewModel(application: Application, username: String) : AndroidViewModel(application) {
     private val mFavoriteUserRepository : FavoriteUserRepository = FavoriteUserRepository(getApplication())
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -29,14 +29,9 @@ class DetailViewModel(application: Application, username1: String) : AndroidView
     private val _followList = MutableLiveData<List<GithubUser>>()
     val followList : LiveData<List<GithubUser>> = _followList
 
-    val favoriteUserIsExist : LiveData<Boolean> = mFavoriteUserRepository.getFavoriteUserByUsername(username1)
-
-    init {
-        Log.d("INIT", username1)
-    }
+    val favoriteUserIsExist : LiveData<Boolean> = mFavoriteUserRepository.getFavoriteUserByUsername(username)
 
     fun getGithubUserDetail(username: String) {
-//        Log.d("DetailViewModel", username1)
         _isLoading.value = true
         val client = ApiConfig.getApiService().getGithubUserDetail(username)
         client.enqueue(object: Callback<GithubUser> {
@@ -100,5 +95,9 @@ class DetailViewModel(application: Application, username1: String) : AndroidView
 
     fun deleteFavoriteUser(favoriteUser: FavoriteUser) {
         mFavoriteUserRepository.delete(favoriteUser)
+    }
+
+    fun checkFavoriteUserIsExist() : Boolean? {
+        return favoriteUserIsExist.value
     }
 }

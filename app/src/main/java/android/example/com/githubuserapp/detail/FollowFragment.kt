@@ -27,7 +27,7 @@ class FollowFragment : Fragment() {
     ): View? {
         binding = FragmentFollowBinding.inflate(inflater, container, false)
 //        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
-        val viewModelFactory = ViewModelFactory.getInstance(this@FollowFragment.requireActivity().application, "")
+        val viewModelFactory = ViewModelFactory(this@FollowFragment.requireActivity().application, "")
         viewModel = ViewModelProvider(this@FollowFragment.requireActivity(), viewModelFactory)[DetailViewModel::class.java]
 
         val githubUser : GithubUser? = requireActivity().intent.getParcelableExtra(MainActivity.EXTRA_DATA)

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModelFactory = ViewModelFactory.getInstance(this@MainActivity.application, "")
+        val viewModelFactory = ViewModelFactory(this@MainActivity.application, "")
         viewModel = ViewModelProvider(this@MainActivity, viewModelFactory)[MainViewModel::class.java]
 
         viewModel.userList.observe(this) { githubUserList ->

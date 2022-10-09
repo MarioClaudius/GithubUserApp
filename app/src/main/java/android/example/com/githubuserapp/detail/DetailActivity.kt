@@ -28,14 +28,11 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
         val githubUser = intent.getParcelableExtra<GithubUser?>(MainActivity.EXTRA_DATA)
-        githubUser?.login
         val favoriteUser = intent.getParcelableExtra<FavoriteUser?>(FavoriteActivity.EXTRA_FAVORITE)
         val username : String = if (githubUser != null) githubUser.login else favoriteUser?.username.toString()
 
-        Log.d("DetailActivity", username)
-        val viewModelFactory = ViewModelFactory.getInstance(this@DetailActivity.application, username)
+        val viewModelFactory = ViewModelFactory(this@DetailActivity.application, username)
         viewModel = ViewModelProvider(this@DetailActivity, viewModelFactory)[DetailViewModel::class.java]
         viewModel.getGithubUserDetail(username)
 
@@ -80,9 +77,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         viewModel.favoriteUserIsExist.observe(this) { favoriteUserIsExist ->
-//            Log.d("OBSERVER JUMLAH", favoriteUserIsExist.toString())
             if(favoriteUserIsExist == null) {
-                Log.d("OBSERVER FAB", "BOOLEANNYA NULL")
             }
             if (favoriteUserIsExist) {
                 binding.fabFavorite.setImageDrawable(ContextCompat.getDrawable(baseContext, R.drawable.ic_baseline_favorite_24))
@@ -99,8 +94,9 @@ class DetailActivity : AppCompatActivity() {
                     username = githubUser.login,
                     type = githubUser.type
                 )
-            if (binding.fabFavorite.drawable == ContextCompat.getDrawable(baseContext, R.drawable.ic_baseline_favorite_24)) {
+            if (viewModel.checkFavoriteUserIsExist()!!) {
                 viewModel.deleteFavoriteUser(favUser)
+
             } else {
                 viewModel.addFavoriteUser(favUser)
             }

@@ -26,7 +26,7 @@ class FavoriteActivity : AppCompatActivity() {
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModelFactory = ViewModelFactory.getInstance(this@FavoriteActivity.application, "")
+        val viewModelFactory = ViewModelFactory(this@FavoriteActivity.application, "")
         viewModel = ViewModelProvider(this@FavoriteActivity, viewModelFactory)[FavoriteViewModel::class.java]
 
         viewModel.favoriteUserList.observe(this) { favoriteUserList ->

@@ -10,4 +10,8 @@ class FavoriteViewModel(application: Application) : ViewModel() {
     private val mFavoriteUserRepository : FavoriteUserRepository = FavoriteUserRepository(application)
 
     val favoriteUserList : LiveData<List<FavoriteUser>> = mFavoriteUserRepository.getAllFavoriteUsers()
+
+    fun deleteFavoriteUser(favoriteUser: FavoriteUser) {
+        mFavoriteUserRepository.delete(favoriteUser)
+    }
 }

@@ -10,20 +10,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 class ViewModelFactory(private val mApplication: Application, private val mUsername: String, private val pref: SettingPreferences) : ViewModelProvider.NewInstanceFactory() {
-//    companion object {
-//        @Volatile
-//        private var INSTANCE : ViewModelFactory? = null
-//
-//        @JvmStatic
-//        fun getInstance(application: Application, id: String): ViewModelFactory {
-//            if (INSTANCE == null) {
-//                synchronized(ViewModelFactory::class.java) {
-//                    INSTANCE = ViewModelFactory(application, id)
-//                }
-//            }
-//            return INSTANCE as ViewModelFactory
-//        }
-//    }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

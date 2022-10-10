@@ -67,11 +67,6 @@ class MainViewModel(private val pref: SettingPreferences) : ViewModel() {
         _isError.value = false
     }
 
-//    fun getThemeSettings(): LiveData<Boolean> {
-//        Log.d("VIEWMODEL",  pref.toString())
-//        return pref.getThemeSetting().asLiveData()
-//    }
-
     fun saveThemeSetting(isDarkModeActive: Boolean) {
         viewModelScope.launch {
             pref.saveThemeSetting(isDarkModeActive)

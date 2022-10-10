@@ -33,7 +33,6 @@ class FollowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFollowBinding.inflate(inflater, container, false)
-//        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
         val pref = SettingPreferences.getInstance(requireContext().dataStore)
         val viewModelFactory = ViewModelFactory(this@FollowFragment.requireActivity().application, "", pref)
         viewModel = ViewModelProvider(this@FollowFragment.requireActivity(), viewModelFactory)[DetailViewModel::class.java]
@@ -45,10 +44,8 @@ class FollowFragment : Fragment() {
         binding.rvFollower.layoutManager = LinearLayoutManager(activity)
 
         if (tabTitle == FOLLOWER) {
-//            viewModel.displayFollowerList(githubUser.login)
             viewModel.displayFollowerList(username)
         } else if (tabTitle == FOLLOWING) {
-//            viewModel.displayFollowingList(githubUser.login)
             viewModel.displayFollowingList(username)
         }
 
